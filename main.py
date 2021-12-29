@@ -22,14 +22,14 @@ SECTIONS = (
     ("Adicionales", "A"))
 
 if __name__ == '__main__':
-    path = Path(sys.argv[1])
+    path = Path(sys.argv[2])
     df = pandas.read_excel(str(path.as_posix()).replace('"', '').replace("'", ""), header=None)
     groups = df.groupby(df[5])
 
     meta = groups.get_group("N")
     nombre_estudiante = list(meta[1])[0]
 
-    html = f'{p(f"Nota: {list(meta[3])[1]:.1f}")} {p(f"Ayudante: Ignacio Slater")}' + \
+    html = f'{p(f"Nota: {list(meta[3])[1]:.1f}")} {p(f"Ayudante: {sys.argv[1]}")}' + \
            secs_to_html(SECTIONS, groups) + (
                f"<br/><br/>Comentarios: {list(meta[1])[1]}" if list(meta[1])[1] != "nan" else "")
     try:
